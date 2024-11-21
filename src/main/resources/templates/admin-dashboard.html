@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+        }
+
+        .navbar {
+          background-color: #343a40;
+          color: #fff;
+          padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+          font-weight: bold;
+        }
+
+        .container {
+          margin-top: 2rem;
+        }
+
+        .card {
+          border: none;
+          border-radius: 15px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          margin-bottom: 2rem;
+          overflow: hidden;
+          transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+          transform: translateY(-5px);
+        }
+
+        .card-header {
+          background-color: #007bff;
+          color: #fff;
+          padding: 1rem 1.5rem;
+          border-bottom: none;
+        }
+
+        .card-header h2 {
+          margin: 0;
+          font-size: 1.2rem;
+        }
+
+        .card-body {
+          padding: 1.5rem;
+        }
+
+        .list-group-item {
+          border: none;
+          padding: 0.75rem 1.25rem;
+        }
+
+        .list-group-item:hover {
+          background-color: #f8f9fa;
+        }
+
+        .list-group-item a {
+          color: #333;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+        }
+
+        .list-group-item a:hover {
+          text-decoration: underline;
+        }
+
+        .list-group-item i {
+          margin-right: 0.5rem;
+        }
+
+        .table-responsive {
+          overflow-x: auto;
+        }
+
+        .table {
+          width: 100%;
+          margin-bottom: 0;
+          background-color: #fff;
+          border-radius: 10px;
+        }
+
+        .table th, .table td {
+          padding: 0.75rem;
+          vertical-align: middle;
+        }
+
+        /* Alignment improvements */
+        .card-header h2 {
+          display: flex;
+          align-items: center; /* Vertically align icon and text */
+        }
+
+        .card-header .icon {
+          margin-right: 0.5rem; /* Adjust spacing between icon and text */
+        }
+
+        .list-group-item {
+          display: flex;
+          align-items: center; /* Vertically align icon and text in list items */
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="#">
+        <img src="/images/hrmslogo.png" alt="HRMS Logo" width="30" height="30" class="d-inline-block align-top mr-2">
+        Magadh University HRMS
+    </a>
+</nav>
+
+<div class="container">
+    <h1 class="text-center mb-4">Welcome, Admin!</h1>
+
+    <div sec:authorize="hasRole('ADMIN')">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-users icon"></i> User Management</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a th:href="@{/employees/create}">
+                                    <i class="fas fa-user-tie"></i> Register Employees
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{/employees}">
+                                    <i class="fas fa-user-tie"></i> View Employees
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{/student/create}">
+                                    <i class="fas fa-user-graduate"></i> Register Students
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{/student/list}">
+                                    <i class="fas fa-user-graduate"></i> View Students
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-check icon"></i> Attendance Overview</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a th:href="@{/admin/attendance/stats}">
+                                    <i class="fas fa-chart-bar"></i> View Attendance Statistics
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{/admin/attendance/records}">
+                                    <i class="fas fa-clipboard-list"></i> View Attendance Records
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-book-reader icon"></i> Academics Management</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a th:href="@{/subjects}">
+                                    <i class="fas fa-book"></i> Manage Subjects
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{/student-marks}">
+                                    <i class="fas fa-graduation-cap"></i> Manage Student Marks
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-bullhorn icon"></i> Announcements</h2>
+                    </div>
+                    <div class="card-body">
+                        <a th:href="@{/announcements/create}" class="btn btn-info mb-3">
+                            <i class="fas fa-plus icon"></i> Create Announcement
+                        </a>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Content</th>
+                                    <th>Posted By</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="announcement : ${announcements}">
+                                    <td th:text="${announcement.title}"></td>
+                                    <td th:text="${announcement.content}"></td>
+                                    <td th:text="${announcement.postedBy}"></td>
+                                    <td>
+                                        <form th:action="@{/announcements/delete/{id}(id=${announcement.id})}" method="post" style="display: inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-user-check icon"></i> Mark Employee Attendance</h2>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/employees/attendance/mark}" method="post">
+                            <div class="form-group">
+                                <label for="employeeId">Employee ID:</label>
+                                <input type="number" class="form-control" id="employeeId" name="employeeId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date (YYYY-MM-DD):</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" name="status" class="form-control">
+                                    <option value="Present">Present</option>
+                                    <option value="Absent">Absent</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Mark Attendance</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-clipboard-list icon"></i> View Attendance</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a th:href="@{/attendance/record}">
+                                    <i class="fas fa-user-graduate"></i> View Student Attendance
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{/employees/attendance/manage}">
+                                    <i class="fas fa-user-tie"></i> View Employee Attendance
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

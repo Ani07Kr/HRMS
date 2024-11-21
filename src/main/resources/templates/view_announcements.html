@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Announcements</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+  <img src="/images/hrmslogo.png" alt="HRMS Logo" class="logo">
+  Welcome to Magadh University</header>
+<main>
+  <h1>Announcements</h1>
+  <div th:each="announcement : ${announcements}" class="card mb-3">
+    <div class="card-body">
+      <h4 class="card-title" th:text="${announcement.title}"></h4>
+      <p class="card-text" th:text="${announcement.content}"></p>
+      <footer>
+        <small>Posted by: <span th:text="${announcement.postedBy}"></span></small>
+        <br>
+        <small>Date: <span th:text="${announcement.postedAt}"></span></small>
+      </footer>
+    </div>
+  </div>
+</main>
+</body>
+</html>

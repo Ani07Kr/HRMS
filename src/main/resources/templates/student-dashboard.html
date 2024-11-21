@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<div class="container mt-5">
+  <!-- Display the username of the authenticated user -->
+  <div sec:authentication="name" class="alert alert-info">
+    <h1>Welcome, <span sec:authentication="principal.username">User</span>!</h1>
+  </div>
+
+  <!-- Content visible only to users with the "STUDENT" role -->
+  <div sec:authorize="hasRole('STUDENT')" class="mt-4">
+    <!-- Student specific sections -->
+
+    <!-- Profile Management Section -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Profile Management</h2>
+      </div>
+      <div class="card-body">
+        <a class="btn btn-primary" th:href="@{/student/create}">View Profile</a>
+      </div>
+    </div>
+
+    <!-- Attendance Section -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h2>Attendance</h2>
+      </div>
+      <div class="card-body">
+        <a class="btn btn-secondary" th:href="@{/attendance/my-attendance}">View My Attendance</a>
+      </div>
+    </div>
+
+    <!-- Academics Section -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h2>Academics</h2>
+      </div>
+      <div class="card-body">
+        <a class="btn btn-info" th:href="@{/subjects/my-subjects}">View My Subjects</a>
+        <a class="btn btn-info ml-2" th:href="@{/student-marks/my-marks}">View My Marks</a>
+      </div>
+    </div>
+
+    <!-- Announcements & Events Section -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h2>Announcements & Events</h2>
+      </div>
+      <div class="card-body">
+        <a class="btn btn-warning" th:href="@{/announcements}">View Announcements</a>
+        <a class="btn btn-warning ml-2" th:href="@{/events}">View Events</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Form -->
+  <div sec:authentication="name">
+    <form action="#" th:action="@{/logout}" method="post">
+      <button type="submit" class="btn btn-danger mt-4">Logout</button>
+    </form>
+  </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
