@@ -20,6 +20,8 @@ public class Announcement {
 
     private LocalDateTime postedAt;
 
+    private LocalDateTime expiryAt; // New field for expiry date and time
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -59,5 +61,13 @@ public class Announcement {
 
     public void setPostedAt(LocalDateTime postedAt) {
         this.postedAt = postedAt;
+    }
+
+    public LocalDateTime getExpiryAt() {
+        return expiryAt;
+    }
+
+    public void setExpiryAt(LocalDateTime expiryAt) {
+        this.expiryAt = expiryAt;
     }
 }

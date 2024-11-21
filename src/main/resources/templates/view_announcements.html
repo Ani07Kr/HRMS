@@ -4,24 +4,180 @@
   <title>Announcements</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(to right, #74ebd5, #9face6);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+
+    header {
+      background-color: #006f91;
+      color: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      max-width: 150px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-top: 50px;
+      font-size: 2.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .card {
+      border-radius: 12px;
+      background-color: #fff;
+      border: none;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      padding: 20px;
+      opacity: 0;
+      animation: fadeIn 0.6s forwards;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title, .card-text, footer {
+      opacity: 0;
+      animation: fadeInContent 1s forwards;
+      animation-delay: 0.3s;
+    }
+
+    .card-title {
+      color: #007bff;
+      font-weight: 500;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .card-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555;
+      animation-delay: 0.6s; /* Delay for the content */
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 15px;
+      text-align: right;
+      animation-delay: 0.9s; /* Delay for the footer */
+    }
+
+    footer small {
+      display: block;
+      margin-top: 5px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+    }
+
+    .card-header {
+      background-color: #f7f7f7;
+      border-radius: 12px 12px 0 0;
+      padding: 15px;
+      color: #333;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* Fade-in animation for the card */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Fade-in animation for the content inside the card */
+    @keyframes fadeInContent {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Sequential animation for each announcement */
+    .card:nth-child(1) {
+      animation-delay: 0.3s;
+    }
+
+    .card:nth-child(2) {
+      animation-delay: 0.6s;
+    }
+
+    .card:nth-child(3) {
+      animation-delay: 0.9s;
+    }
+
+    .card:nth-child(4) {
+      animation-delay: 1.2s;
+    }
+
+    .card:nth-child(5) {
+      animation-delay: 1.5s;
+    }
+
+  </style>
 </head>
 <body>
+
 <header>
   <img src="/images/hrmslogo.png" alt="HRMS Logo" class="logo">
-  Welcome to Magadh University</header>
+  <p>Welcome to Magadh University</p>
+</header>
+
 <main>
-  <h1>Announcements</h1>
-  <div th:each="announcement : ${announcements}" class="card mb-3">
-    <div class="card-body">
-      <h4 class="card-title" th:text="${announcement.title}"></h4>
-      <p class="card-text" th:text="${announcement.content}"></p>
-      <footer>
-        <small>Posted by: <span th:text="${announcement.postedBy}"></span></small>
-        <br>
-        <small>Date: <span th:text="${announcement.postedAt}"></span></small>
-      </footer>
+  <div class="container">
+    <h1>Announcements</h1>
+
+    <!-- Display announcements -->
+    <div th:each="announcement : ${announcements}" class="card">
+      <div class="card-header">
+        <h4 class="card-title" th:text="${announcement.title}"></h4>
+      </div>
+      <div class="card-body">
+        <p class="card-text" th:text="${announcement.content}"></p>
+        <footer>
+          <small>Posted by: <span th:text="${announcement.postedBy}"></span></small>
+          <small>Posted At: <span th:text="${announcement.postedAt}"></span></small>
+          <small>Expires At: <span th:text="${announcement.expiryAt}"></span></small>
+        </footer>
+      </div>
     </div>
+
   </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

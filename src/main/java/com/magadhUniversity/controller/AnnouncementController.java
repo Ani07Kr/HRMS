@@ -1,7 +1,5 @@
 package com.magadhUniversity.controller;
 
-
-
 import com.magadhUniversity.model.Announcement;
 import com.magadhUniversity.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -35,9 +34,27 @@ public class AnnouncementController {
     @PostMapping("/create")
     public String createAnnouncement(@RequestParam String title,
                                      @RequestParam String content,
-                                     @RequestParam String postedBy) {
-        announcementService.createAnnouncement(title, content, postedBy);
+                                     @RequestParam String postedBy,
+                                     @RequestParam String expiryAt) {
+        LocalDateTime expiryDateTime = LocalDateTime.parse(expiryAt); // Parse expiry date
+        announcementService.createAnnouncement(title, content, postedBy, expiryDateTime);
         return "redirect:/announcements";
+    }
+
+    // View expired announcements
+    @GetMapping("/expired")
+    public String viewExpiredAnnouncements(Model model) {
+        List<Announcement> expiredAnnouncements = announcementService.getExpiredAnnouncements();
+        model.addAttribute("expiredAnnouncements", expiredAnnouncements);
+        return "view_expired_announcements";
+    }
+
+    // Republish announcement (update expiry date)
+    @PostMapping("/republish/{id}")
+    public String republishAnnouncement(@PathVariable Long id, @RequestParam String newExpiryAt) {
+        LocalDateTime newExpiryDateTime = LocalDateTime.parse(newExpiryAt); // Parse new expiry date
+        announcementService.republishAnnouncement(id, newExpiryDateTime);
+        return "redirect:/announcements/expired";
     }
 
     // Delete announcement (Admins only)
