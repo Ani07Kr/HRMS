@@ -21,7 +21,7 @@ public class AnnouncementService {
         announcement.setContent(content);
         announcement.setPostedBy(postedBy);
         announcement.setPostedAt(LocalDateTime.now());
-        announcement.setExpiryAt(expiryAt); // Set expiry date
+        announcement.setExpiryAt(expiryAt);
         return announcementRepository.save(announcement);
     }
 
@@ -41,11 +41,12 @@ public class AnnouncementService {
                 .toList();
     }
 
-    // Republish Announcement (update expiry date)
-    public Announcement republishAnnouncement(Long id, LocalDateTime newExpiryAt) {
+    // Update Announcement content and expiry date
+    public Announcement updateAnnouncement(Long id, String newContent, LocalDateTime newExpiryAt) {
         Announcement announcement = announcementRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Announcement not found"));
-        announcement.setExpiryAt(newExpiryAt); // Update the expiry date
+        announcement.setContent(newContent); // Update content
+        announcement.setExpiryAt(newExpiryAt); // Update expiry date
         return announcementRepository.save(announcement);
     }
 

@@ -49,11 +49,13 @@ public class AnnouncementController {
         return "view_expired_announcements";
     }
 
-    // Republish announcement (update expiry date)
-    @PostMapping("/republish/{id}")
-    public String republishAnnouncement(@PathVariable Long id, @RequestParam String newExpiryAt) {
+    // Update announcement content and expiry date
+    @PostMapping("/update/{id}")
+    public String updateAnnouncement(@PathVariable Long id,
+                                     @RequestParam String newContent,
+                                     @RequestParam String newExpiryAt) {
         LocalDateTime newExpiryDateTime = LocalDateTime.parse(newExpiryAt); // Parse new expiry date
-        announcementService.republishAnnouncement(id, newExpiryDateTime);
+        announcementService.updateAnnouncement(id, newContent, newExpiryDateTime);
         return "redirect:/announcements/expired";
     }
 
